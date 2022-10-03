@@ -10,7 +10,7 @@ real_accounts = undefined;
 if(process.env.DEPLOYER_KEY && process.env.OWNER_KEY) {
   real_accounts = [process.env.OWNER_KEY, process.env.DEPLOYER_KEY];
 }
-const gatewayurl = "https://offchain-resolver-example.uc.r.appspot.com/{sender}/{data}.json"
+const gatewayurl = "http://localhost:8080/{sender}/{data}.json"
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
@@ -57,7 +57,7 @@ module.exports = {
   },
   namedAccounts: {
     signer: {
-      default: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
+      default: '0x6b23Eb5B8Cfe6C1EFd9fD7Bbd93874E4534d0603',
     },
     deployer: {
       default: 1,

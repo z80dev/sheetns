@@ -7,6 +7,22 @@
         "text":{ "email": "test@example.com" },
         "contenthash": "0xe301017012204edd2984eeaf3ddf50bac238ec95c5713fb40b5e428b508fdbe55d3b9f155ffe"
     },
+    "axelf.eth": {
+        "addresses": {
+            "60": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+            "2":  "0xa914b48297bff5dadecc5f36145cec6a5f20d57c8f9b87"
+        },
+        "text":{ "email": "wildcard@example.com" },
+        "contenthash": "0xe301017012204edd2984eeaf3ddf50bac238ec95c5713fb40b5e428b508fdbe55d3b9f155ffe"
+    },
+    "*.axelf.eth": {
+        "addresses": {
+            "60": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+            "2":  "0xa914b48297bff5dadecc5f36145cec6a5f20d57c8f9b87"
+        },
+        "text":{ "email": "wildcard@example.com" },
+        "contenthash": "0xe301017012204edd2984eeaf3ddf50bac238ec95c5713fb40b5e428b508fdbe55d3b9f155ffe"
+    },
     "*.test.eth": {
         "addresses": {
             "60": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
