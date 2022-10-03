@@ -1,0 +1,8 @@
+name: offchain-resolver
+dependencies:
+  - name: ens-contracts
+    github: ensdomains/ens-contracts
+
+solidity:
+  import_remapping:
+    - "@ensdomains=ensdomains"
