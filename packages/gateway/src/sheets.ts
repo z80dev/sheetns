@@ -20,13 +20,13 @@ export class SheetsDatabase implements Database {
   sheetId: string;
 
   constructor(data: ZoneData, ttl: number, key: string, sheetId: string) {
-    this.apiKey = key
+    this.apiKey = key;
     this.sheetClient = google.sheets({
       version: 'v4',
-       auth: key
-    })
+      auth: key,
+    });
 
-    this.sheetId = sheetId
+    this.sheetId = sheetId;
 
     // Insert an empty synthetic wildcard record for every concrete name that doesn't have one
     // This is to ensure that if '*.eth' exists and 'test.eth' exists, 'blah.test.eth' does not resolve to '*.eth'.
@@ -37,49 +37,54 @@ export class SheetsDatabase implements Database {
       }
     }
     this.ttl = ttl;
-    setInterval(() => { this.sync().then(console.log) }, 5000)
+    setInterval(() => {
+      this.sync().then(console.log);
+    }, 5000);
   }
 
   static fromApiKey(key: string, sheetId: string) {
-    return new SheetsDatabase({}, 100, key, sheetId)
+    return new SheetsDatabase({}, 100, key, sheetId);
   }
 
   async sync() {
-    const nameData = Object()
-    nameData['addresses'] = Object()
-    nameData['text'] = Object()
+    const nameData = Object();
+    nameData['addresses'] = Object();
+    nameData['text'] = Object();
 
     const params = {
       spreadsheetId: this.sheetId,
       includeGridData: true,
-    }
+    };
 
-    const res = await this.sheetClient?.spreadsheets.get(params)
+    const res = await this.sheetClient?.spreadsheets.get(params);
 
-    let [sheetData] = res?.data.sheets!
-    let [{rowData}] = sheetData.data!
-    let [columns, ...data] = rowData!
-    let cols = []
+    let [sheetData] = res?.data.sheets!;
+    let [{ rowData }] = sheetData.data!;
+    let [columns, ...data] = rowData!;
+    let cols = [];
     for (let col of columns.values ?? []) {
-      console.log(col.userEnteredValue)
-      cols.push(col.userEnteredValue?.stringValue)
+      console.log(col.userEnteredValue);
+      cols.push(col.userEnteredValue?.stringValue);
     }
     for (let row of data) {
-      let name = row.values?.find((_, ind) => ind == 0)?.userEnteredValue?.stringValue ?? ""
-      nameData[name] = Object()
-      nameData[name]["addresses"] = Object()
-      nameData[name]["text"] = Object()
+      let name =
+        row.values?.find((_, ind) => ind === 0)?.userEnteredValue?.stringValue ??
+        '';
+      nameData[name] = Object();
+      nameData[name]['addresses'] = Object();
+      nameData[name]['text'] = Object();
       for (let i = 1; i < (row.values?.length ?? 0); i++) {
-        let colname = cols[i]
-        let val = row.values?.find((_, ind) => ind == i )?.userEnteredValue?.stringValue
-        let colparts = colname?.split(":", 2)
-        if (colparts?.length == 2) {
-          nameData[name][colparts[0]][colparts[1]] = val
+        let colname = cols[i];
+        let val = row.values?.find((_, ind) => ind === i)?.userEnteredValue
+          ?.stringValue;
+        let colparts = colname?.split(':', 2);
+        if (colparts?.length === 2) {
+          nameData[name][colparts[0]][colparts[1]] = val;
         }
       }
     }
-    this.data = nameData
-    return true
+    this.data = nameData;
+    return true;
   }
 
   addr(name: string, coinType: number) {
