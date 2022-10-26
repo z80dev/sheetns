@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 
 async function main() {
   const Lock = await ethers.getContractFactory("OffchainResolver");
-  const lock = await Lock.deploy("http://localhost:8080/{sender}/{data}.json", ["0x6b23Eb5B8Cfe6C1EFd9fD7Bbd93874E4534d0603"]);
+  const lock = await Lock.deploy("https://api.sheetns.xyz/{sender}/{data}.json", [process.env.PUB_KEY]);
 
   await lock.deployed();
 }
