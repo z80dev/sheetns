@@ -1,11 +1,5 @@
 FROM node:16
 
-ENV API_KEY
-ENV SHEET_ID
-
-ENV PRIV_KEY
-ENV PUB_KEY
-
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -22,4 +16,4 @@ RUN yarn
 COPY . .
 
 EXPOSE 8080
-CMD [ "yarn", "start", "--private-key", "$PRIV_KEY", "--data", "test.eth.json", "--sheet", "$SHEET_ID" ]
+CMD [ "yarn", "start" ]

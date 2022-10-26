@@ -18,7 +18,6 @@ contract OffchainResolver is IExtendedResolver, SupportsInterface {
     mapping(address=>bool) public signers;
 
     event NewSigners(address[] signers);
-    event RemovedSigners(address[] signers);
     error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData);
 
     constructor(string memory _url, address[] memory _signers) {
@@ -27,22 +26,6 @@ contract OffchainResolver is IExtendedResolver, SupportsInterface {
             signers[_signers[i]] = true;
         }
         emit NewSigners(_signers);
-    }
-
-    function setUrl(string memory _url) external {
-        require(signers[msg.sender], "!AUTH");
-        url = _url;
-    }
-
-    function setSignersAuth(address[] memory _signers, bool auth) external {
-        for(uint i = 0; i < _signers.length; i++) {
-            signers[_signers[i]] = auth;
-        }
-        if (auth) {
-            emit NewSigners(_signers);
-        } else {
-            emit RemovedSigners(_signers);
-        }
     }
 
     function makeSignatureHash(address target, uint64 expires, bytes memory request, bytes memory result) external pure returns(bytes32) {
