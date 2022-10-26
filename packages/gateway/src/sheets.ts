@@ -68,8 +68,8 @@ export class SheetsDatabase implements Database {
     }
     for (let row of data) {
       let name =
-        row.values?.find((_, ind) => ind === 0)?.userEnteredValue?.stringValue ??
-        '';
+        row.values?.find((_, ind) => ind === 0)?.userEnteredValue
+          ?.stringValue ?? '';
       nameData[name] = Object();
       nameData[name]['addresses'] = Object();
       nameData[name]['text'] = Object();
