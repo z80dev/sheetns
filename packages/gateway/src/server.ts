@@ -25,6 +25,7 @@ export interface Database {
   contenthash(
     name: string
   ): PromiseOrResult<{ contenthash: string; ttl: number }>;
+  sync(): PromiseOrResult<boolean>
 }
 
 function decodeDnsName(dnsname: Buffer) {
@@ -47,6 +48,7 @@ const queryHandlers: {
   ) => Promise<DatabaseResult>;
 } = {
   'addr(bytes32)': async (db, name, _args) => {
+    await db.sync()
     const { addr, ttl } = await db.addr(name, ETH_COIN_TYPE);
     return { result: [addr], ttl };
   },
