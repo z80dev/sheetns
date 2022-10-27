@@ -216,7 +216,7 @@ function dnsName(name: string) {
   );
 }
 
-describe('End to end test', () => {
+it('End to end test', () => {
   const key = new ethers.utils.SigningKey(TEST_PRIVATE_KEY);
   const signerAddress = ethers.utils.computeAddress(key.privateKey);
   const db = new JSONDatabase(TEST_DB, 300);
@@ -255,7 +255,7 @@ describe('End to end test', () => {
     await baseProvider.send('evm_revert', [snapshot]);
   });
 
-  describe('resolve()', () => {
+  it('resolve()', () => {
     it('resolves calls to addr(bytes32)', async () => {
       const callData = Resolver.encodeFunctionData('addr(bytes32)', [
         ethers.utils.namehash('test.eth'),
