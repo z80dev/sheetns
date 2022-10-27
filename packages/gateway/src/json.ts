@@ -43,6 +43,10 @@ export class JSONDatabase implements Database {
     return { addr: nameData.addresses[coinType], ttl: this.ttl };
   }
 
+  async sync() {
+    return true;
+  }
+
   text(name: string, key: string) {
     const nameData = this.findName(name);
     if (!nameData || !nameData.text || !nameData.text[key]) {
